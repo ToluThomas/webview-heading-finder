@@ -1,6 +1,5 @@
 import React from 'react';
-import Webview from 'atoms/Webview';
-import {WebviewProps} from 'atoms/Webview';
+import Webview, {WebviewProps} from 'atoms/Webview';
 import WebviewTraverserBottomNavigation, {
   WebviewTraverserBottomNavigationProps,
 } from './WebviewTraverserBottomNavigation';
