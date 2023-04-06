@@ -8,7 +8,7 @@ const WEBVIEW_URL = 'https://www.bbc.com/';
 
 export default function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-  const webviewRef = useRef(null);
+  const webviewRef = useRef<any>(null);
 
   function onPressBack() {
     webviewRef.current?.injectJavaScript(`
