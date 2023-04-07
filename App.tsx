@@ -3,40 +3,30 @@ import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import WebviewTraverser from 'organisms/WebviewTraverser';
 import {appStyles} from 'utils/styles';
-
-const WEBVIEW_URL = 'https://www.bbc.com/';
+import {constants} from 'utils/constants';
+const {
+  TEST_ID,
+  WEBVIEW_URL,
+  GO_TO_PREVIOUS_HEADING_JS,
+  GO_TO_NEXT_HEADING_JS,
+  INIT_INJECTED_JAVASCRIPT,
+} = constants;
 
 export default function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const webviewRef = useRef<any>(null);
 
   function onPressBack() {
-    webviewRef.current?.injectJavaScript(`
-      headers[currentHeaderIndex].style.border = ""; // clear border
-      currentHeaderIndex = currentHeaderIndex <= 0 ? headers.length - 1 : currentHeaderIndex - 1;
-      headers[currentHeaderIndex].scrollIntoView({behavior: 'smooth'});
-      headers[currentHeaderIndex].style.border = "2px solid blue"; // Show border so we see current position
-    `);
+    webviewRef.current?.injectJavaScript(GO_TO_PREVIOUS_HEADING_JS);
   }
 
   function onPressNext() {
-    webviewRef.current?.injectJavaScript(`
-        headers[currentHeaderIndex].style.border = ""; // clear border
-        currentHeaderIndex = currentHeaderIndex >= headers.length - 1 ? 0 : currentHeaderIndex + 1;
-        headers[currentHeaderIndex].scrollIntoView({ behavior: 'smooth' });
-        headers[currentHeaderIndex].style.border = "2px solid blue" // Show border so we see current position
-    `);
+    webviewRef.current?.injectJavaScript(GO_TO_NEXT_HEADING_JS);
   }
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
-  const getHeaders = `
-  const headerTags = ["h1", "h2", "h3", "h4", "h5", "h6"];
-  let headers = headerTags.map(headerTag => [...document.getElementsByTagName(headerTag)]).flat();
-  let currentHeaderIndex = 0;
-  `;
 
   return (
     <SafeAreaView style={[backgroundStyle, appStyles.container]}>
@@ -45,11 +35,12 @@ export default function App(): JSX.Element {
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <WebviewTraverser
+        testID={TEST_ID}
         webviewRef={webviewRef}
         source={{uri: WEBVIEW_URL}}
         onPressBack={onPressBack}
         onPressNext={onPressNext}
-        injectedJavascript={getHeaders}
+        injectedJavascript={INIT_INJECTED_JAVASCRIPT}
       />
     </SafeAreaView>
   );

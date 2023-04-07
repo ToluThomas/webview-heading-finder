@@ -11,6 +11,7 @@ type ButtonProps = {
   leftIconName?: SVGName;
   iconWidth?: number;
   iconHeight?: number;
+  testID: string;
 };
 
 export default function Button({
@@ -20,9 +21,13 @@ export default function Button({
   iconHeight = 20,
   leftIconName,
   rightIconName,
+  testID,
 }: ButtonProps): JSX.Element {
   return (
-    <TouchableOpacity onPress={onPress} style={buttonStyles.container}>
+    <TouchableOpacity
+      testID={testID}
+      onPress={onPress}
+      style={buttonStyles.container}>
       {leftIconName ? (
         <SVG name={leftIconName} width={iconWidth} height={iconHeight} />
       ) : null}

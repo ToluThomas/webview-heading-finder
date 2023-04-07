@@ -7,17 +7,20 @@ export type WebviewProps = {
   webviewRef: any;
   source: WebviewSource;
   injectedJavascript?: string;
+  testID: string;
 };
 
 export default function Webview({
   webviewRef,
   source,
   injectedJavascript,
+  testID,
 }: WebviewProps): JSX.Element {
   return (
     <RNWebView
       ref={webviewRef}
       source={source}
+      testID={testID}
       renderLoading={Loader}
       injectedJavaScript={injectedJavascript}
       onMessage={e => {}}
