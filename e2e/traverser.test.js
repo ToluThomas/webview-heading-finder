@@ -1,4 +1,4 @@
-const {device, element, by, web, waitFor} = require('detox');
+const {device, element, expect, by, web, waitFor} = require('detox');
 
 const testID = 'traverser';
 const webviewID = `${testID}.webview`;
@@ -6,13 +6,13 @@ const navigatorID = `${testID}.webviewNavigator`;
 const previousButtonID = `${navigatorID}.previousButton`;
 const nextButtonID = `${navigatorID}.nextButton`;
 const selectedHeaderClassName = 'traverserSelectedHeading';
-const testHeadingText = 'iPhone 14 Pro';
-const testLastHeadingText = 'Get up to 3% Daily Cash back with every purchase.';
+const testHeadingText = 'Lorem Ipsum';
+const testLastHeadingText = '1914 translation by H. Rackham';
 
 describe('Traverser', () => {
   beforeAll(async () => {
     await device.installApp();
-    await device.launchApp({newInstance: true});
+    await device.launchApp();
   });
 
   beforeEach(async () => {
@@ -34,12 +34,10 @@ describe('Traverser', () => {
     // web API currently only supported on Android
     if (device.getPlatform() === 'android') {
       const webview = web(by.id(webviewID));
-      const selectedHeadings = webview.element(
+      const selectedHeading = webview.element(
         by.web.className(selectedHeaderClassName),
       );
-      expect([...selectedHeadings]).toHaveLength(1); // Only one heading must be selected
-      const selectedHeadingText = [...selectedHeadings][0].getText();
-      expect(selectedHeadingText).toContain(testHeadingText); // Must contain expected text in heading
+      await expect(selectedHeading).toHaveText(testHeadingText); // Must contain expected text in heading
     }
   });
 
@@ -48,12 +46,10 @@ describe('Traverser', () => {
     // web API currently only supported on Android
     if (device.getPlatform() === 'android') {
       const webview = web(by.id(webviewID));
-      const selectedHeadings = webview.element(
+      const selectedHeading = webview.element(
         by.web.className(selectedHeaderClassName),
       );
-      expect([...selectedHeadings]).toHaveLength(1); // Only one heading must be selected
-      const selectedHeadingText = [...selectedHeadings][0].getText();
-      expect(selectedHeadingText).toContain(testLastHeadingText); // Must contain expected text in heading
+      await expect(selectedHeading).toHaveText(testLastHeadingText); // Must contain expected text in heading
     }
   });
 });
