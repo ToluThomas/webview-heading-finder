@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
+import {Platform, SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import WebviewTraverser from 'organisms/WebviewTraverser';
 import {appStyles} from 'utils/styles';
@@ -28,6 +28,14 @@ export default function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  function initJavascript() {
+    webviewRef.current.injectJavaScript(INIT_INJECTED_JAVASCRIPT);
+  }
+
+  const onLoadEndProp = {
+    ...(Platform.OS === 'android' ? {onLoadEnd: initJavascript} : {}),
+  };
+
   return (
     <SafeAreaView style={[backgroundStyle, appStyles.container]}>
       <StatusBar
@@ -40,6 +48,7 @@ export default function App(): JSX.Element {
         source={{uri: WEBVIEW_URL}}
         onPressBack={onPressBack}
         onPressNext={onPressNext}
+        {...onLoadEndProp}
         injectedJavascript={INIT_INJECTED_JAVASCRIPT}
       />
     </SafeAreaView>

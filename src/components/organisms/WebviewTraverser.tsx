@@ -14,6 +14,7 @@ export default function WebviewTraverser({
   onPressBack,
   onPressNext,
   testID,
+  onLoadEnd,
 }: WebviewTraverserProps): JSX.Element {
   return (
     <>
@@ -21,6 +22,7 @@ export default function WebviewTraverser({
         testID={`${testID}.webview`}
         webviewRef={webviewRef}
         source={source}
+        onLoadEnd={onLoadEnd}
         injectedJavascript={injectedJavascript}
       />
       <WebviewTraverserBottomNavigation
