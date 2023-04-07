@@ -8,8 +8,8 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test:ios": "detox test --configuration ios.sim.debug",
-    "test:android": "detox test --configuration android.emu.debug",
-    "test": "detox test --configuration ios.sim.debug && detox test --configuration android.emu.debug"
+    "test:android": "detox build -c android.emu.debug && detox test --configuration android.emu.debug",
+    "test": "npm run test:ios && npm run test:android"
   },
   "dependencies": {
     "react": "18.2.0",
