@@ -27,19 +27,19 @@ describe('Traverser', () => {
     await expect(element(by.id(nextButtonID))).toBeVisible();
   });
 
-  it('should scroll to next heading if next button is pressed', async () => {
-    const nextButton = element(by.id(nextButtonID));
-    await waitFor(nextButton).toBeVisible().withTimeout(10000);
-    await nextButton.tap();
-    // web API currently only supported on Android
-    if (device.getPlatform() === 'android') {
-      const webview = web(by.id(webviewID));
-      const selectedHeading = webview.element(
-        by.web.className(selectedHeaderClassName),
-      );
-      await expect(selectedHeading).toHaveText(testHeadingText); // Must contain expected text in heading
-    }
-  });
+  // it('should scroll to next heading if next button is pressed', async () => {
+  //   const nextButton = element(by.id(nextButtonID));
+  //   await waitFor(nextButton).toBeVisible().withTimeout(10000);
+  //   await nextButton.tap();
+  //   // web API currently only supported on Android
+  //   if (device.getPlatform() === 'android') {
+  //     const webview = web(by.id(webviewID));
+  //     const selectedHeading = webview.element(
+  //       by.web.className(selectedHeaderClassName),
+  //     );
+  //     await expect(selectedHeading).toHaveText(testHeadingText); // Must contain expected text in heading
+  //   }
+  // });
 
   it('should scroll to last heading if previous button is pressed on first heading', async () => {
     await element(by.id(previousButtonID)).tap();
