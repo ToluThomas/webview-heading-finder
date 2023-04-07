@@ -84,4 +84,9 @@ module.exports = {
       app: 'android.release',
     },
   },
+  behavior: {
+    init: {
+      exposeGlobals: false,
+    },
+  },
 };
