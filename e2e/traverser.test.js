@@ -1,4 +1,4 @@
-const {device, element, expect, by, web, waitFor} = require('detox');
+const {device, element, expect, by, web} = require('detox');
 
 const testID = 'traverser';
 const webviewID = `${testID}.webview`;
@@ -6,8 +6,8 @@ const navigatorID = `${testID}.webviewNavigator`;
 const previousButtonID = `${navigatorID}.previousButton`;
 const nextButtonID = `${navigatorID}.nextButton`;
 const selectedHeaderClassName = 'traverserSelectedHeading';
-const testHeadingText = 'Lorem Ipsum';
-const testLastHeadingText = '1914 translation by H. Rackham';
+const testHeadingText = 'Test Heading 1';
+const testLastHeadingText = 'Test Heading 20';
 
 describe('Traverser', () => {
   beforeAll(async () => {
@@ -28,9 +28,12 @@ describe('Traverser', () => {
   });
 
   it('should scroll to next heading if next button is pressed', async () => {
-    const nextButton = element(by.id(nextButtonID));
-    await waitFor(nextButton).toBeVisible().withTimeout(10000);
-    await nextButton.tap();
+    if (device.getPlatform() === 'android') {
+      await element(by.id(nextButtonID)).longPress();
+    } else {
+      await element(by.id(nextButtonID)).tap();
+    }
+
     // web API currently only supported on Android
     if (device.getPlatform() === 'android') {
       const webview = web(by.id(webviewID));
@@ -42,7 +45,12 @@ describe('Traverser', () => {
   });
 
   it('should scroll to last heading if previous button is pressed on first heading', async () => {
-    await element(by.id(previousButtonID)).tap();
+    if (device.getPlatform() === 'android') {
+      await element(by.id(previousButtonID)).longPress();
+    } else {
+      await element(by.id(previousButtonID)).tap();
+    }
+
     // web API currently only supported on Android
     if (device.getPlatform() === 'android') {
       const webview = web(by.id(webviewID));
