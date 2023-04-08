@@ -6,7 +6,7 @@ import {appStyles} from 'utils/styles';
 import {constants} from 'utils/constants';
 const {
   TEST_ID,
-  WEBVIEW_URL,
+  WEBVIEW_HTML,
   GO_TO_PREVIOUS_HEADING_JS,
   GO_TO_NEXT_HEADING_JS,
   INIT_INJECTED_JAVASCRIPT,
@@ -45,7 +45,7 @@ export default function App(): JSX.Element {
       <WebviewTraverser
         testID={TEST_ID}
         webviewRef={webviewRef}
-        source={{uri: WEBVIEW_URL}}
+        source={{html: WEBVIEW_HTML}}
         onPressBack={onPressBack}
         onPressNext={onPressNext}
         {...onLoadEndProp}
