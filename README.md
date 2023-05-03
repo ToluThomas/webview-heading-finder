@@ -1,5 +1,5 @@
 # Webview Heading Finder
-A React Native application to traverse headings (h1 to h6) in a webview.
+A React Native application to traverse headings (h1 to h6) in a webview (tested using [Detox](https://github.com/wix/Detox)).
 
 ## Installation
 1. ### Clone this repository
